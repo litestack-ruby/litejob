@@ -2,8 +2,8 @@
 
 [![Gem Version](https://badge.fury.io/rb/litejob.svg)](https://rubygems.org/gems/litejob)
 [![Gem Downloads](https://img.shields.io/gem/dt/litejob)](https://rubygems.org/gems/litejob)
-<!-- ![Tests](https://github.com/litestack-ruby/litejob/actions/workflows/main.yml/badge.svg) -->
-<!-- ![Coverage](https://img.shields.io/badge/code_coverage-24%25-red) -->
+![Tests](https://github.com/litestack-ruby/litejob/actions/workflows/main.yml/badge.svg)
+![Coverage](https://img.shields.io/badge/code_coverage-100%25-brightgreen)
 
 TODO: Delete this and the text below, and describe your gem
 
