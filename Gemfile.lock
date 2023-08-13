@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    litejob (0.2.0)
+    litejob (0.2.1)
       litequeue (>= 0.2.0)
       litescheduler (>= 0.2.1)
 
