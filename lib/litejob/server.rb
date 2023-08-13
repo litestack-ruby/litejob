@@ -2,11 +2,14 @@
 
 require "litequeue"
 require "litescheduler"
+require_relative "processor"
 
 module Litejob
   # Litejob::Server is responsible for popping job payloads from the SQLite queue.
   # :nocov:
   class Server
+    # TODO: make queues use [["default", 1]]
+    # TODO: make queue priorities optional
     def initialize(queues)
       @queue = Litequeue.instance
       @scheduler = Litescheduler.instance
@@ -26,7 +29,7 @@ module Litejob
     def pop(queue)
       result = @queue.pop(queue: queue)
 
-      return result[0] if result.length == 1
+      return result unless result.is_a?(Array)
       return false if result.empty?
 
       result
