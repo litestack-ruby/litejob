@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.2] - 2023-08-14
+
+- Add logging
+
 ## [0.2.1] - 2023-08-13
 
 - Fix some bugs with Litejob::Server
