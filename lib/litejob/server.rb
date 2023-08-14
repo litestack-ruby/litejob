@@ -8,14 +8,13 @@ module Litejob
   # Litejob::Server is responsible for popping job payloads from the SQLite queue.
   # :nocov:
   class Server
-    # TODO: make queues use [["default", 1]]
-    # TODO: make queue priorities optional
-    def initialize(queues)
+    def initialize(queues = ["default"])
       @queue = Litequeue.instance
       @scheduler = Litescheduler.instance
       @queues = queues
       # group and order queues according to their priority
       @prioritized_queues = queues.each_with_object({}) do |(name, priority, spawns), memo|
+        priority ||= 5
         memo[priority] ||= []
         memo[priority] << [name, spawns == "spawn"]
       end.sort_by do |priority, _|
