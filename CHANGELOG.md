@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.3] - 2023-08-14
+
+- Make queues and queue priorities optional when initializing a Server instance
+
 ## [0.2.2] - 2023-08-14
 
 - Add logging
