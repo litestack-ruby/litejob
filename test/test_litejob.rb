@@ -397,8 +397,7 @@ describe Litejob do
 
     describe "when processing a job" do
       it "immediately raises when the job class is undefined" do
-        payload = ["ID", JSON.dump({class: "NonExistentClass", params: [], attempts: 5, queue: "default"})]
-        processor = Litejob::Processor.new(payload)
+        processor = Litejob::Processor.new("QUEUE", "ID", JSON.dump({class: "NonExistentClass", params: [], attempts: 5, queue: "default"}))
 
         assert_raises(NameError, "uninitialized constant NonExistentClass") { processor.process! }
       end

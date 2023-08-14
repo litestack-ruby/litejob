@@ -12,6 +12,10 @@ require_relative "../lib/litejob/processor"
 
 require "minitest/autorun"
 
+Litejob.configure do |config|
+  config.logger = Logger.new(IO::NULL)
+end
+
 $jobqueue = Litequeue.instance
 
 # Setup a class to allow us to track and test whether code has been performed
@@ -81,9 +85,9 @@ def perform_enqueued_jobs(&block)
 
   # iterate over enqueued jobs and perform them
   until $jobqueue.empty?
-    payload = $jobqueue.pop
-    next if payload.nil?
-    Litejob::Processor.new(payload).process!
+    id, serialized_job = $jobqueue.pop
+    next if id.nil?
+    Litejob::Processor.new("test", id, serialized_job).process!
   end
 end
 
@@ -94,9 +98,9 @@ def perform_enqueued_job
   # get first enqueued jobs and perform it
   until performed
     attempts += 1
-    payload = $jobqueue.pop
-    next if payload.nil?
-    Litejob::Processor.new(payload).process!
+    id, serialized_job = $jobqueue.pop
+    next if id.nil?
+    Litejob::Processor.new("test", id, serialized_job).process!
     performed = true
   end
 end
