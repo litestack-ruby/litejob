@@ -12,7 +12,7 @@ module Litejob
       @serialized_job = serialized_job
       @job_hash = JSON.parse(@serialized_job)
       @litequeue = Litequeue.instance
-      
+
       set_log_context!(queue: @queue, class: @job_hash["class"], job: @id)
     end
 
@@ -28,7 +28,7 @@ module Litejob
       begin
         instance.perform(*@job_hash["params"])
         log(:end)
-      rescue StandardError => e
+      rescue => e
         if @job_hash["retries_left"] == 0
           err(e, "retries exhausted, moving to _dead queue")
           repush(@id, @job_hash, 0, "_dead")
@@ -40,32 +40,32 @@ module Litejob
           repush(@id, @job_hash, retry_delay, @job_hash["queue"])
         end
       end
-    rescue StandardError => e
+    rescue => e
       # this is an error in the extraction of job info, retrying here will not be useful
       err(e, "while processing job=#{@serialized_job}")
       raise e
     end
-    
+
     private
-    
+
     def set_log_context!(**attributes)
-      @log_context = attributes.map { |k, v| [k, v].join('=') }.join(' ')
+      @log_context = attributes.map { |k, v| [k, v].join("=") }.join(" ")
     end
-    
+
     def log(event, msg: nil)
       prefix = "[litejob]:[#{event.to_s.upcase}]"
-      
+
       Litejob.logger.info [prefix, @log_context, msg].compact.join(" ")
     end
-    
+
     def err(exception, msg = nil)
       prefix = "[litejob]:[ERR]"
-      error_context = if exception.class.name == exception.message
+      error_context = if exception.message == exception.class.name
         "failed with #<#{exception.class.name}>"
       else
         "failed with #{exception.inspect}"
       end
-      
+
       Litejob.logger.error [prefix, @log_context, error_context, msg].compact.join(" ")
     end
   end
