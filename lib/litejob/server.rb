@@ -37,6 +37,7 @@ module Litejob
 
     def run!
       @scheduler.spawn do
+        Litejob.logger.info("[litejob]:[RUN] id=#{@scheduler.context.object_id}")
         worker_sleep_index = 0
         while @running
           processed = 0
@@ -47,7 +48,8 @@ module Litejob
                 batched += 1
                 processed += 1
 
-                processor = Processor.new(payload)
+                id, serialized_job = payload
+                processor = Processor.new(queue, id, serialized_job)
                 processor.process!
 
                 # give other contexts a chance to run here
