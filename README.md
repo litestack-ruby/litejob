@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/litejob.svg)](https://rubygems.org/gems/litejob)
 [![Gem Downloads](https://img.shields.io/gem/dt/litejob)](https://rubygems.org/gems/litejob)
 ![Tests](https://github.com/litestack-ruby/litejob/actions/workflows/main.yml/badge.svg)
-![Coverage](https://img.shields.io/badge/code_coverage-100%25-brightgreen)
+![Coverage](https://img.shields.io/badge/code_coverage-70%25-red)
 
 Litejob is a Ruby module that enables seamless integration of the Litequeue job queueing system into Ruby applications. By including the Litejob module in a class and implementing the `#perform` method, developers can easily enqueue and process jobs asynchronously.
 

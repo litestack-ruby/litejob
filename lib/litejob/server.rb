@@ -6,7 +6,6 @@ require_relative "processor"
 
 module Litejob
   # Litejob::Server is responsible for popping job payloads from the SQLite queue.
-  # :nocov:
   class Server
     def initialize(queues = ["default"])
       @queue = Litequeue.instance
@@ -67,5 +66,4 @@ module Litejob
       end
     end
   end
-  # :nocov:
 end
