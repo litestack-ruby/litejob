@@ -5,25 +5,69 @@
 ![Tests](https://github.com/litestack-ruby/litejob/actions/workflows/main.yml/badge.svg)
 ![Coverage](https://img.shields.io/badge/code_coverage-100%25-brightgreen)
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/litejob`. To experiment with that code, run `bin/console` for an interactive prompt.
+Litejob is a Ruby module that enables seamless integration of the Litequeue job queueing system into Ruby applications. By including the Litejob module in a class and implementing the `#perform` method, developers can easily enqueue and process jobs asynchronously.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add litejob
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install litejob
 
 ## Usage
 
-TODO: Write usage instructions here
+When a job is enqueued, Litejob creates a new instance of the class and passes it any necessary arguments. The class's `#perform` method is then called asynchronously to process the job. This allows the application to continue running without waiting for the job to finish, improving overall performance and responsiveness.
+
+One of the main benefits of using Litejob is its simplicity. Because it integrates directly with Litequeue, developers do not need to worry about managing job queues or processing logic themselves. Instead, they can focus on implementing the `#perform` method to handle the specific job tasks.
+
+Litejob also provides a number of useful features, including the ability to set job priorities, retry failed jobs, and limit the number of retries. These features can be configured using simple configuration options in the class that includes the Litejob module.
+
+Overall, Litejob is a powerful and flexible module that allows developers to easily integrate Litequeue job queueing into their Ruby applications. By enabling asynchronous job processing, Litejob can help improve application performance and scalability, while simplifying the development and management of background job processing logic.
+
+```ruby
+class EasyJob
+  include ::Litejob
+
+  def perform(params)
+    # do stuff
+  end
+end
+```
+
+Then later you can perform a job asynchronously:
+
+```ruby
+EasyJob.perform_async(params) # perform a job synchronously
+```
+
+Or perform it at a specific time:
+
+```ruby
+EasyJob.perform_at(time, params) # perform a job at a specific time
+```
+
+Or perform it after a certain delay:
+
+```ruby
+EasyJob.perform_in(delay, params) # perform a job after a certain delay
+```
+
+You can also specify a specific queue to be used
+
+```ruby
+class EasyJob
+  include ::Litejob
+
+  self.queue = :urgent
+
+  def perform(params)
+    # do stuff
+  end
+end
+```
 
 ## Development
 
@@ -33,7 +77,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/litejob. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/litejob/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/litestack-ruby/litejob. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/litestack-ruby/litejob/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -41,4 +85,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Litejob project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/litejob/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Litejob project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/litestack-ruby/litejob/blob/main/CODE_OF_CONDUCT.md).
