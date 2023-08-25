@@ -33,6 +33,14 @@ module Litejob
       result
     end
 
+    def kill
+      @scheduler&.context&.kill || false
+    end
+
+    def exit
+      @scheduler&.context&.exit || false
+    end
+
     def run!
       @scheduler.spawn do
         Litejob.logger.info("[litejob]:[RUN] id=#{@scheduler.context.object_id}")
